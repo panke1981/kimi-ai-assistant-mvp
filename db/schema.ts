@@ -162,6 +162,7 @@ export const metrics = mysqlTable("metrics", {
   category: mysqlEnum("category", [
     "revenue",
     "cost",
+    "expense",
     "profit",
     "cashflow",
     "efficiency",
