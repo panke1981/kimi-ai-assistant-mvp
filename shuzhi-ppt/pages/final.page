@@ -1,0 +1,50 @@
+pageType: final
+background:
+  type: image
+  src: "/mnt/agents/output/datapulse-ppt/images/cover_bg.png"
+  mask:
+    type: gradient
+    gradientType: linear
+    direction: to_bottom
+    stops:
+      - {color: "rgba(10,10,15,0.5)", position: 0}
+      - {color: "rgba(10,10,15,0.85)", position: 1}
+elements:
+  - elementId: brandName
+    elementType: text
+    bounds: [340, 220, 600, 80]
+    content:
+      style: "$title"
+      fontSize: 56
+      text: |
+        <p>数观 DataPulse</p>
+      wrap: false
+  - elementId: accentLine
+    elementType: shape
+    bounds: [560, 315, 160, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$accent"}
+  - elementId: tagline
+    elementType: text
+    bounds: [290, 340, 700, 45]
+    content:
+      style: "$subtitle"
+      fontSize: 24
+      text: |
+        <p>AI驱动经营，数据洞察未来</p>
+      wrap: false
+  - elementId: ctaText
+    elementType: text
+    bounds: [340, 420, 600, 35]
+    content:
+      style: "$body"
+      fontSize: 18
+      color: "$textMuted"
+      text: |
+        <p style="text-align: center;">让每一个企业都拥有AI经营分析师</p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

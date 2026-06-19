@@ -1,14 +1,11 @@
 import { getDb } from "../api/queries/connection";
-// TODO: import tables from "./schema"
 
 async function seed() {
-  const db = getDb();
   console.log("Seeding database...");
+  getDb();
 
-  // TODO: insert seed data, e.g.
-  // await db.insert(schema.posts).values([
-  //   { title: "First post", content: "Hello world" },
-  // ]);
+  // The current MVP uses front-end demo data for the local single-user flow.
+  // Keep this script as an explicit no-op until real seed fixtures are needed.
 
   console.log("Done.");
   process.exit(0); // close MySQL connection pool

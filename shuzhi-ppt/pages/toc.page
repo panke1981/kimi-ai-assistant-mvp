@@ -1,0 +1,122 @@
+pageType: table_of_contents
+background:
+  type: solid
+  color: "$background"
+elements:
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 50, 400, 50]
+    content:
+      style: "$heading"
+      text: |
+        <p>目录</p>
+      wrap: false
+  - elementId: titleLine
+    elementType: shape
+    bounds: [60, 110, 60, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$accent"}
+  - elementId: col1Number
+    elementType: text
+    bounds: [60, 200, 340, 80]
+    content:
+      fontSize: 60
+      fontFamily: "Liter"
+      color: "rgba(124,58,237,0.3)"
+      text: |
+        <p>01</p>
+      wrap: false
+  - elementId: col1Title
+    elementType: text
+    bounds: [60, 290, 340, 40]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>市场痛点</p>
+      wrap: false
+  - elementId: col1Desc
+    elementType: text
+    bounds: [60, 340, 340, 80]
+    content:
+      style: "$body"
+      fontSize: 18
+      color: "$textMuted"
+      text: |
+        <p>中小企业经营分析的现实困境：数据沉睡、分析滞后、决策盲目</p>
+  - elementId: col1Line
+    elementType: shape
+    bounds: [60, 450, 340, 2]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: col2Number
+    elementType: text
+    bounds: [470, 200, 340, 80]
+    content:
+      fontSize: 60
+      fontFamily: "Liter"
+      color: "rgba(124,58,237,0.3)"
+      text: |
+        <p>02</p>
+      wrap: false
+  - elementId: col2Title
+    elementType: text
+    bounds: [470, 290, 340, 40]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>数观解决方案</p>
+      wrap: false
+  - elementId: col2Desc
+    elementType: text
+    bounds: [470, 340, 340, 80]
+    content:
+      style: "$body"
+      fontSize: 18
+      color: "$textMuted"
+      text: |
+        <p>从数据到决策的一站式AI闭环：识别、计算、分析、对话</p>
+  - elementId: col2Line
+    elementType: shape
+    bounds: [470, 450, 340, 2]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: col3Number
+    elementType: text
+    bounds: [880, 200, 340, 80]
+    content:
+      fontSize: 60
+      fontFamily: "Liter"
+      color: "rgba(124,58,237,0.3)"
+      text: |
+        <p>03</p>
+      wrap: false
+  - elementId: col3Title
+    elementType: text
+    bounds: [880, 290, 340, 40]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>未来展望</p>
+      wrap: false
+  - elementId: col3Desc
+    elementType: text
+    bounds: [880, 340, 340, 80]
+    content:
+      style: "$body"
+      fontSize: 18
+      color: "$textMuted"
+      text: |
+        <p>构建企业经营智能的基础设施：工具 → 平台 → 生态</p>
+  - elementId: col3Line
+    elementType: shape
+    bounds: [880, 450, 340, 2]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

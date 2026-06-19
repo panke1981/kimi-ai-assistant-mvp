@@ -3,7 +3,7 @@
  * Centralizes all AI interactions for field recognition, report generation, and chat
  */
 
-const SYSTEM_PROMPT_FIELD_RECOGNITION = `你是「数观」AI 经营分析系统的字段识别专家。你的任务是理解用户上传的经营数据文件中的字段含义。
+const SYSTEM_PROMPT_FIELD_RECOGNITION = `你是「数智经营」AI 经营分析系统的字段识别专家。你的任务是理解用户上传的经营数据文件中的字段含义。
 
 请根据提供的字段名和样本数据，为每个字段给出：
 1. 映射后的标准字段名（中文）
@@ -20,7 +20,7 @@ const SYSTEM_PROMPT_FIELD_RECOGNITION = `你是「数观」AI 经营分析系统
 
 请严格按 JSON 格式返回数组。`;
 
-const SYSTEM_PROMPT_REPORT = `你是「数观」AI 经营分析系统的资深经营分析师。你拥有 20 年企业财务管理经验，擅长从数据中发现经营问题。
+const SYSTEM_PROMPT_REPORT = `你是「数智经营」AI 经营分析系统的资深经营分析师。你拥有 20 年企业财务管理经验，擅长从数据中发现经营问题。
 
 请基于提供的经营数据指标，生成一份专业的月度经营分析报告。
 
@@ -33,7 +33,7 @@ const SYSTEM_PROMPT_REPORT = `你是「数观」AI 经营分析系统的资深�
 
 请严格按 JSON 格式返回。`;
 
-const SYSTEM_PROMPT_CHAT = `你是「数观」AI 经营助手，一位资深的企业经营顾问。你的职责是帮助中小企业主理解经营数据、发现问题、优化决策。
+const SYSTEM_PROMPT_CHAT = `你是「数智经营」AI 经营助手，一位资深的企业经营顾问。你的职责是帮助中小企业主理解经营数据、发现问题、优化决策。
 
 你的风格：
 - 专业但不失亲和力
@@ -46,9 +46,50 @@ const SYSTEM_PROMPT_CHAT = `你是「数观」AI 经营助手，一位资深的�
 
 请用中文回答。`;
 
+type FieldSample = string | number | boolean | null;
+
+interface FieldInput {
+  name: string;
+  samples: FieldSample[];
+}
+
+export interface RecognizedField {
+  name: string;
+  mappedField: string;
+  fieldType: string;
+  confidence: number;
+}
+
+interface ReportField {
+  originalField: string;
+  mappedField: string | null;
+  fieldType: string | null;
+}
+
+interface ReportMetric {
+  name: string;
+  value: string | number;
+  unit?: string | null;
+  changePercent?: number | null;
+  category?: string | null;
+}
+
+export interface GeneratedReport {
+  summary: string;
+  insights: Array<{ title: string; content: string; level: "info" | "warning" | "success" | string }>;
+  risks: Array<{ title: string; content: string; severity: "high" | "medium" | "low" | string }>;
+  suggestions: string[];
+  dataGaps: string[];
+}
+
+interface ChatMessage {
+  role: string;
+  content: string;
+}
+
 // ─── Field Recognition ──────────────────────────────────
 
-export async function recognizeFields(fields: { name: string; samples: any[] }[]): Promise<any[]> {
+export async function recognizeFields(fields: FieldInput[]): Promise<RecognizedField[]> {
   const prompt = `${SYSTEM_PROMPT_FIELD_RECOGNITION}
 
 请分析以下字段：
@@ -62,7 +103,7 @@ ${fields.map(f => `- "${f.name}": 样本值 [${f.samples.slice(0, 5).join(", ")}
     // Parse JSON from response
     const jsonMatch = response.match(/\[[\s\S]*\]/);
     if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
+      return JSON.parse(jsonMatch[0]) as RecognizedField[];
     }
     return [];
   } catch (e) {
@@ -71,7 +112,7 @@ ${fields.map(f => `- "${f.name}": 样本值 [${f.samples.slice(0, 5).join(", ")}
   }
 }
 
-function fallbackFieldRecognition(fields: { name: string; samples: any[] }[]): any[] {
+function fallbackFieldRecognition(fields: FieldInput[]): RecognizedField[] {
   const keywordMap: Record<string, { mappedField: string; fieldType: string }> = {
     // Revenue
     "金额": { mappedField: "金额", fieldType: "revenue" },
@@ -136,9 +177,9 @@ function fallbackFieldRecognition(fields: { name: string; samples: any[] }[]): a
 export async function generateReport(data: {
   period: string;
   companyName: string;
-  fields: any[];
-  metrics: any[];
-}): Promise<any> {
+  fields: ReportField[];
+  metrics: ReportMetric[];
+}): Promise<GeneratedReport> {
   const prompt = `${SYSTEM_PROMPT_REPORT}
 
 经营数据概况：
@@ -161,7 +202,7 @@ ${data.metrics.map((m) => `  · ${m.name}: ${m.value}${m.unit || ""} ${m.changeP
     const response = await callAI(prompt);
     const jsonMatch = response.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      return JSON.parse(jsonMatch[0]);
+      return JSON.parse(jsonMatch[0]) as GeneratedReport;
     }
   } catch (e) {
     console.error("Report generation failed:", e);
@@ -171,7 +212,7 @@ ${data.metrics.map((m) => `  · ${m.name}: ${m.value}${m.unit || ""} ${m.changeP
   return generateFallbackReport(data);
 }
 
-function generateFallbackReport(data: { metrics: any[]; companyName: string; period: string }): any {
+function generateFallbackReport(data: { metrics: ReportMetric[]; companyName: string; period: string }): GeneratedReport {
   const revenue = data.metrics.find((m) => m.category === "revenue");
   const profit = data.metrics.find((m) => m.category === "profit");
   const cost = data.metrics.find((m) => m.category === "cost");
@@ -203,9 +244,9 @@ function generateFallbackReport(data: { metrics: any[]; companyName: string; per
 export async function chat(context: {
   companyName: string;
   period: string;
-  metrics: any[];
-  fields: any[];
-  history: { role: string; content: string }[];
+  metrics: ReportMetric[];
+  fields: Array<ReportField & { isConfirmed?: string | null }>;
+  history: ChatMessage[];
 }, userMessage: string): Promise<string> {
   const metricsSummary = context.metrics
     .map((m) => `- ${m.name}: ${m.value}${m.unit || ""}`)

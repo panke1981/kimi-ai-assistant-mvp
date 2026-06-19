@@ -4,13 +4,15 @@ import { getDb } from "../queries/connection";
 import { conversations, companies, periods, metrics, fieldDictionary } from "@db/schema";
 import { eq, and, desc } from "drizzle-orm";
 import { generateChatResponse } from "../lib/ai-engine";
+import { assertCompanyOwner } from "../lib/ownership";
 
 export const aiRouter = createRouter({
   // Get chat history
   getHistory: authedQuery
     .input(z.object({ companyId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       return db
         .select()
         .from(conversations)
@@ -29,6 +31,7 @@ export const aiRouter = createRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
 
       // Save user message
       await db.insert(conversations).values({

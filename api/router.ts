@@ -8,6 +8,7 @@ import { reportRouter, metricRouter } from "./routers/report-router";
 import { aiRouter } from "./routers/ai-router";
 import { parseRouter } from "./routers/parse-router";
 import { aiSettingsRouter } from "./routers/ai-settings-router";
+import { diagnosisRouter } from "./routers/diagnosis-router";
 
 export const appRouter = createRouter({
   ping: publicQuery.query(() => ({ ok: true, ts: Date.now() })),
@@ -21,6 +22,7 @@ export const appRouter = createRouter({
   ai: aiRouter,
   parse: parseRouter,
   aiSettings: aiSettingsRouter,
+  diagnosis: diagnosisRouter,
 });
 
 export type AppRouter = typeof appRouter;

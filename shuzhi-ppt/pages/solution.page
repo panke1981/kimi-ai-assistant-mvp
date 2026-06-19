@@ -1,0 +1,275 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>SOLUTION OVERVIEW</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>数观：从数据到决策的一站式闭环</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: step1Bg
+    elementType: shape
+    bounds: [60, 160, 200, 200]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: step1Num
+    elementType: text
+    bounds: [75, 175, 40, 30]
+    content:
+      fontSize: 20
+      fontFamily: "Liter"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>01</p>
+      wrap: false
+  - elementId: step1Title
+    elementType: text
+    bounds: [75, 215, 170, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>上传数据</strong></p>
+      wrap: false
+  - elementId: step1Desc
+    elementType: text
+    bounds: [75, 250, 170, 90]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>Excel/CSV一键上传，支持多种格式</p>
+  - elementId: arrow1
+    elementType: text
+    bounds: [270, 240, 40, 30]
+    content:
+      fontSize: 24
+      color: "$primary"
+      text: |
+        <p>&#10132;</p>
+      wrap: false
+  - elementId: step2Bg
+    elementType: shape
+    bounds: [320, 160, 200, 200]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: step2Num
+    elementType: text
+    bounds: [335, 175, 40, 30]
+    content:
+      fontSize: 20
+      fontFamily: "Liter"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>02</p>
+      wrap: false
+  - elementId: step2Title
+    elementType: text
+    bounds: [335, 215, 170, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>AI字段识别</strong></p>
+      wrap: false
+  - elementId: step2Desc
+    elementType: text
+    bounds: [335, 250, 170, 90]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>自动识别字段含义，人工一键确认</p>
+  - elementId: arrow2
+    elementType: text
+    bounds: [530, 240, 40, 30]
+    content:
+      fontSize: 24
+      color: "$primary"
+      text: |
+        <p>&#10132;</p>
+      wrap: false
+  - elementId: step3Bg
+    elementType: shape
+    bounds: [580, 160, 200, 200]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: step3Num
+    elementType: text
+    bounds: [595, 175, 40, 30]
+    content:
+      fontSize: 20
+      fontFamily: "Liter"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>03</p>
+      wrap: false
+  - elementId: step3Title
+    elementType: text
+    bounds: [595, 215, 170, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>指标计算</strong></p>
+      wrap: false
+  - elementId: step3Desc
+    elementType: text
+    bounds: [595, 250, 170, 90]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>14项核心指标自动计算产出</p>
+  - elementId: arrow3
+    elementType: text
+    bounds: [790, 240, 40, 30]
+    content:
+      fontSize: 24
+      color: "$primary"
+      text: |
+        <p>&#10132;</p>
+      wrap: false
+  - elementId: step4Bg
+    elementType: shape
+    bounds: [840, 160, 200, 200]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: step4Num
+    elementType: text
+    bounds: [855, 175, 40, 30]
+    content:
+      fontSize: 20
+      fontFamily: "Liter"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>04</p>
+      wrap: false
+  - elementId: step4Title
+    elementType: text
+    bounds: [855, 215, 170, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>分析报告</strong></p>
+      wrap: false
+  - elementId: step4Desc
+    elementType: text
+    bounds: [855, 250, 170, 90]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>AI深度分析，洞察+预警+建议</p>
+  - elementId: arrow4
+    elementType: text
+    bounds: [1050, 240, 40, 30]
+    content:
+      fontSize: 24
+      color: "$primary"
+      text: |
+        <p>&#10132;</p>
+      wrap: false
+  - elementId: step5Bg
+    elementType: shape
+    bounds: [1060, 160, 160, 200]
+    shapeName: rect
+    fill: {type: solid, color: "$primary"}
+  - elementId: step5Num
+    elementType: text
+    bounds: [1075, 175, 40, 30]
+    content:
+      fontSize: 20
+      fontFamily: "Liter"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>05</p>
+      wrap: false
+  - elementId: step5Title
+    elementType: text
+    bounds: [1075, 215, 130, 30]
+    content:
+      fontSize: 18
+      fontFamily: "Liter, MiSans"
+      color: "#FFFFFF"
+      text: |
+        <p><strong>AI对话</strong></p>
+      wrap: false
+  - elementId: step5Desc
+    elementType: text
+    bounds: [1075, 250, 130, 90]
+    content:
+      fontSize: 16
+      fontFamily: "Liter, MiSans"
+      color: "rgba(255,255,255,0.8)"
+      text: |
+        <p>自然语言提问，随时答疑</p>
+  - elementId: resultBox
+    elementType: shape
+    bounds: [60, 410, 1160, 230]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: resultTitle
+    elementType: text
+    bounds: [90, 430, 500, 35]
+    content:
+      style: "$heading"
+      fontSize: 22
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>5步闭环，10分钟完成传统3-5天的工作量</p>
+      wrap: false
+  - elementId: resultBody
+    elementType: text
+    bounds: [90, 475, 1100, 140]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong style="color: $accent;">效率提升 50-100倍</strong>：传统方式3-5天 vs 数观10分钟</p>
+        <p style="margin-top: 10px;"><strong style="color: $accent;">成本降低 90%+</strong>：替代15-30万年薪的专职分析师</p>
+        <p style="margin-top: 10px;"><strong style="color: $accent;">覆盖度全面升级</strong>：从单一财务维度到14项经营指标+AI洞察</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

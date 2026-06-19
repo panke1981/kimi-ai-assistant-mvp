@@ -3,12 +3,19 @@ import { createRouter, authedQuery } from "../middleware";
 import { getDb } from "../queries/connection";
 import { reports, metrics } from "@db/schema";
 import { eq, desc } from "drizzle-orm";
+import {
+  assertCompanyOwner,
+  assertMetricCompanyOwner,
+  assertPeriodOwner,
+  assertReportOwner,
+} from "../lib/ownership";
 
 export const reportRouter = createRouter({
   list: authedQuery
     .input(z.object({ companyId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       return db
         .select()
         .from(reports)
@@ -18,8 +25,9 @@ export const reportRouter = createRouter({
 
   getByPeriod: authedQuery
     .input(z.object({ periodId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertPeriodOwner(db, input.periodId, ctx.user.id);
       return db
         .select()
         .from(reports)
@@ -29,8 +37,9 @@ export const reportRouter = createRouter({
 
   getById: authedQuery
     .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertReportOwner(db, input.id, ctx.user.id);
       const [report] = await db
         .select()
         .from(reports)
@@ -48,8 +57,13 @@ export const reportRouter = createRouter({
         title: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
+      const period = await assertPeriodOwner(db, input.periodId, ctx.user.id);
+      if (period.companyId !== input.companyId) {
+        throw new Error("Period does not belong to company");
+      }
       const [report] = await db
         .insert(reports)
         .values({
@@ -76,17 +90,19 @@ export const reportRouter = createRouter({
         status: z.enum(["generating", "completed", "error"]).optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
       const { id, ...data } = input;
+      await assertReportOwner(db, id, ctx.user.id);
       await db.update(reports).set(data).where(eq(reports.id, id));
       return { success: true };
     }),
 
   delete: authedQuery
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertReportOwner(db, input.id, ctx.user.id);
       await db.delete(reports).where(eq(reports.id, input.id));
       return { success: true };
     }),
@@ -95,8 +111,9 @@ export const reportRouter = createRouter({
 export const metricRouter = createRouter({
   list: authedQuery
     .input(z.object({ periodId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertPeriodOwner(db, input.periodId, ctx.user.id);
       return db
         .select()
         .from(metrics)
@@ -113,6 +130,7 @@ export const metricRouter = createRouter({
         category: z.enum([
           "revenue",
           "cost",
+          "expense",
           "profit",
           "cashflow",
           "efficiency",
@@ -125,8 +143,13 @@ export const metricRouter = createRouter({
         metadata: z.any().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertMetricCompanyOwner(db, input.companyId, ctx.user.id);
+      const period = await assertPeriodOwner(db, input.periodId, ctx.user.id);
+      if (period.companyId !== input.companyId) {
+        throw new Error("Period does not belong to company");
+      }
       const [metric] = await db
         .insert(metrics)
         .values({

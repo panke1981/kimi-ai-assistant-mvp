@@ -1,0 +1,48 @@
+pageType: cover
+background:
+  type: image
+  src: "/mnt/agents/output/datapulse-ppt/images/cover_bg.png"
+  mask:
+    type: gradient
+    gradientType: linear
+    direction: to_bottom
+    stops:
+      - {color: "rgba(10,10,15,0.3)", position: 0}
+      - {color: "rgba(10,10,15,0.7)", position: 1}
+elements:
+  - elementId: brandLabel
+    elementType: text
+    bounds: [490, 240, 300, 24]
+    content:
+      style: "$label"
+      text: |
+        <p style="color: $accent; letter-spacing: 4px;">BUSINESS INTELLIGENCE</p>
+      wrap: false
+  - elementId: mainTitle
+    elementType: text
+    bounds: [290, 280, 700, 70]
+    content:
+      style: "$title"
+      fontSize: 52
+      text: |
+        <p>数观 DataPulse</p>
+      wrap: false
+  - elementId: accentLine
+    elementType: shape
+    bounds: [590, 365, 100, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$accent"}
+  - elementId: subtitle
+    elementType: text
+    bounds: [340, 385, 600, 40]
+    content:
+      style: "$subtitle"
+      fontSize: 22
+      text: |
+        <p>AI驱动的一站式经营分析助手</p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

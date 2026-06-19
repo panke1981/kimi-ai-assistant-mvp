@@ -1,21 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/hooks/useTheme";
-import { useDemo } from "./DemoProvider";
+import { useDemo } from "@/hooks/useDemo";
 import { Toaster } from "@/components/ui/sonner";
+import { desktopWorkspaceNotice, DESKTOP_WORKSPACE_MIN_WIDTH } from "@/lib/desktop-workspace";
 import {
   LayoutDashboard, FolderOpen, BarChart3, Bot,
-  Settings, Menu, X, LogOut, Sun, Moon, Sparkles,
+  Settings, LogOut, Sun, Moon, Sparkles,
 } from "lucide-react";
-
-const navItems = [
-  { path: "/", label: "概览", icon: LayoutDashboard },
-  { path: "/files", label: "资料", icon: FolderOpen },
-  { path: "/analysis", label: "分析", icon: BarChart3 },
-  { path: "/assistant", label: "助手", icon: Bot },
-  { path: "/settings", label: "设置", icon: Settings },
-];
 
 const desktopNavItems = [
   { path: "/", label: "概览", icon: LayoutDashboard },
@@ -25,17 +18,62 @@ const desktopNavItems = [
   { path: "/settings", label: "模型设置", icon: Settings },
 ];
 
+const commandCenterPaths = new Set(["/", "/files", "/fields", "/analysis", "/assistant", "/settings"]);
+const workspaceNavigationTargets: Record<string, "overview" | "files" | "fields" | "analysis" | "assistant" | "settings"> = {
+  "/": "overview",
+  "/files": "files",
+  "/fields": "fields",
+  "/analysis": "analysis",
+  "/assistant": "assistant",
+  "/settings": "settings",
+};
+
+type WorkspacePath = "/" | "/files" | "/fields" | "/analysis" | "/assistant" | "/settings";
+
 export function Layout() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth({ redirectOnUnauthenticated: false });
   const { isDark, toggleTheme } = useTheme();
   const { isDemo, exitDemo } = useDemo();
+  const [desktopWorkspacePath, setDesktopWorkspacePath] = useState(location.pathname);
+
+  useEffect(() => {
+    const handleWorkspacePathChange = (event: Event) => {
+      const path = (event as CustomEvent<WorkspacePath>).detail;
+      setDesktopWorkspacePath(path);
+    };
+
+    window.addEventListener("command-center:workspace-path", handleWorkspacePathChange);
+    return () => window.removeEventListener("command-center:workspace-path", handleWorkspacePathChange);
+  }, []);
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);
+  };
+
+  const isDesktopNavActive = (path: string) => {
+    if (!commandCenterPaths.has(location.pathname)) return isActive(path);
+    if (desktopWorkspacePath === "/fields" && path === "/files") return true;
+    return desktopWorkspacePath === path;
+  };
+
+  const handleDesktopNavigation = (path: string) => {
+    if (!commandCenterPaths.has(location.pathname)) {
+      setDesktopWorkspacePath(path);
+      navigate(path);
+      return;
+    }
+
+    const target = workspaceNavigationTargets[path];
+    if (!target) {
+      navigate(path);
+      return;
+    }
+
+    setDesktopWorkspacePath(path);
+    window.dispatchEvent(new CustomEvent("command-center:navigate", { detail: target }));
   };
 
   return (
@@ -43,150 +81,95 @@ export function Layout() {
       {/* Demo Mode Banner */}
       {isDemo && (
         <div className="fixed top-0 left-0 right-0 z-[70] flex items-center justify-center gap-2 py-1.5 text-xs"
-          style={{ background: "linear-gradient(90deg, #A78BFA, #3B82F6)", color: "white" }}>
+          style={{ background: "linear-gradient(90deg, #2563EB, #0F766E)", color: "white" }}>
           <Sparkles size={12} />
-          演示模式 - 使用测试数据体验全部功能
-          <button onClick={() => { exitDemo(); navigate("/login"); }} className="underline ml-2">退出</button>
+          本地单用户模式 - 使用内置经营数据跑通完整流程
+          <button onClick={() => { exitDemo(); navigate("/login"); }} className="underline ml-2">返回入口</button>
         </div>
       )}
 
+      <div
+        className="flex min-h-screen flex-1 items-center justify-center p-6 min-[1180px]:hidden"
+        style={{ paddingTop: isDemo ? 72 : 24 }}
+      >
+        <section className="max-w-sm rounded-xl border bg-white p-6 text-center shadow-sm" style={{ borderColor: "var(--border-default)" }}>
+          <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl text-base font-semibold" style={{ color: "white", background: "linear-gradient(135deg, var(--brand), var(--brand-blue))" }}>
+            数
+          </div>
+          <h1 className="mt-4 text-base font-semibold" style={{ color: "var(--text-primary)" }}>请使用电脑端大屏</h1>
+          <p className="mt-2 text-sm leading-6" style={{ color: "var(--text-muted)" }}>
+            {desktopWorkspaceNotice}
+          </p>
+          <p className="mt-4 text-xs" style={{ color: "var(--text-muted)" }}>
+            当前最小工作区宽度：{DESKTOP_WORKSPACE_MIN_WIDTH}px
+          </p>
+        </section>
+      </div>
+
       {/* ═══ Desktop Sidebar ═══ */}
-      <aside className="fixed left-0 top-0 h-full z-50 hidden md:flex flex-col"
-        style={{ width: 200, background: "var(--bg-sidebar)", borderRight: "1px solid var(--border-default)" }}>
-        <div className="px-5 py-6">
-          <h1 className="text-xl tracking-wider cursor-pointer font-extralight" style={{ color: "var(--text-primary)" }} onClick={() => navigate("/")}>数观</h1>
-          <p className="text-[10px] mt-0.5 tracking-[0.2em] uppercase" style={{ color: "var(--text-muted)" }}>DataPulse</p>
+      <aside className="fixed left-0 top-0 z-50 hidden h-full min-[1180px]:flex flex-col"
+        style={{ width: 76, background: "var(--bg-sidebar)", borderRight: "1px solid var(--border-default)" }}>
+        <div className="flex flex-col items-center px-3 py-5">
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-lg font-semibold"
+            style={{ color: "white", background: "linear-gradient(135deg, var(--brand), var(--brand-blue))" }}
+            onClick={() => handleDesktopNavigation("/")}
+            title="数智经营指挥中心"
+          >
+            数
+          </button>
+          <p className="mt-2 text-[9px] tracking-[0.18em] uppercase" style={{ color: "var(--text-muted)" }}>BI</p>
         </div>
 
-        <nav className="flex-1 px-3 space-y-1">
+        <nav className="flex-1 px-2 space-y-2">
           {desktopNavItems.map((item) => (
-            <div key={item.path} className={`nav-item ${isActive(item.path) ? "active" : ""}`} onClick={() => navigate(item.path)}>
-              <item.icon size={16} strokeWidth={1.5} />
-              <span>{item.label}</span>
-            </div>
+            <button
+              key={item.path}
+              title={item.label}
+              className={`nav-item h-11 w-full justify-center px-0 ${isDesktopNavActive(item.path) ? "active" : ""}`}
+              onClick={() => handleDesktopNavigation(item.path)}
+            >
+              <item.icon size={17} strokeWidth={1.6} />
+            </button>
           ))}
         </nav>
 
-        <div className="px-3 pb-2">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-300 border"
-            style={{ background: isDark ? "linear-gradient(135deg, rgba(167,139,250,0.08), rgba(59,130,246,0.08))" : "linear-gradient(135deg, rgba(167,139,250,0.06), rgba(59,130,246,0.06))", borderColor: isDark ? "rgba(167,139,250,0.2)" : "rgba(167,139,250,0.25)" }}
-            onClick={() => navigate("/assistant")}>
+        <div className="px-2 pb-2">
+          <button className="flex h-11 w-full items-center justify-center rounded-xl cursor-pointer transition-all duration-300 border"
+            style={{ background: isDark ? "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(14,165,233,0.08))" : "linear-gradient(135deg, rgba(37,99,235,0.07), rgba(15,118,110,0.06))", borderColor: isDark ? "rgba(37,99,235,0.2)" : "rgba(37,99,235,0.18)" }}
+            onClick={() => handleDesktopNavigation("/assistant")}
+            title="经营助手">
             <Bot size={16} style={{ color: "var(--brand)" }} strokeWidth={1.5} />
-            <div>
-              <p className="text-xs font-medium" style={{ color: "var(--text-secondary)" }}>AI 经营助手</p>
-              <p className="text-[10px]" style={{ color: "var(--text-muted)" }}>随时提问</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="px-3 pb-2">
-          <button onClick={toggleTheme} className="flex items-center gap-3 px-4 py-2.5 rounded-lg w-full transition-all duration-200" style={{ color: "var(--text-muted)" }}>
-            {isDark ? <Sun size={14} strokeWidth={1.5} /> : <Moon size={14} strokeWidth={1.5} />}
-            <span className="text-sm">{isDark ? "浅色模式" : "深色模式"}</span>
           </button>
         </div>
 
-        <div className="px-4 py-4 border-t" style={{ borderColor: "var(--border-subtle)" }}>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "rgba(167, 139, 250, 0.15)" }}>
-              <span className="text-xs" style={{ color: "var(--brand)" }}>{isDemo ? "D" : (user?.name || "U")[0]}</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs truncate" style={{ color: "var(--text-secondary)" }}>{isDemo ? "演示用户" : (user?.name || "未登录")}</p>
+        <div className="px-2 pb-2">
+          <button onClick={toggleTheme} title={isDark ? "浅色模式" : "深色模式"} className="flex h-11 w-full items-center justify-center rounded-lg transition-all duration-200" style={{ color: "var(--text-muted)" }}>
+            {isDark ? <Sun size={14} strokeWidth={1.5} /> : <Moon size={14} strokeWidth={1.5} />}
+          </button>
+        </div>
+
+        <div className="px-2 py-4 border-t" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="mb-3 flex justify-center">
+            <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(37, 99, 235, 0.12)" }} title={isDemo ? "本地工作台" : (user?.name || "未登录")}>
+              <span className="text-xs" style={{ color: "var(--brand)" }}>{isDemo ? "本" : (user?.name || "U")[0]}</span>
             </div>
           </div>
-          <button onClick={() => { isDemo ? exitDemo() : logout(); navigate("/login"); }}
-            className="flex items-center gap-2 text-xs transition-colors" style={{ color: "var(--text-muted)" }}>
+          <button onClick={() => { if (isDemo) exitDemo(); else logout(); navigate("/login"); }}
+            className="mx-auto flex h-8 w-8 items-center justify-center rounded-lg transition-colors" style={{ color: "var(--text-muted)" }} title={isDemo ? "返回入口" : "退出登录"}>
             <LogOut size={12} />
-            <span>{isDemo ? "退出演示" : "退出"}</span>
           </button>
         </div>
       </aside>
 
-      {/* ═══ Mobile Top Bar ═══ */}
-      <header className="fixed top-0 left-0 right-0 z-40 md:hidden flex items-center justify-between px-4 h-14"
-        style={{ background: "var(--bg-sidebar)", borderBottom: "1px solid var(--border-default)", top: isDemo ? 28 : 0 }}>
-        <button onClick={() => setMenuOpen(true)} className="p-2 -ml-2" style={{ color: "var(--text-secondary)" }}>
-          <Menu size={20} strokeWidth={1.5} />
-        </button>
-        <h1 className="text-sm font-medium tracking-wider" style={{ color: "var(--text-primary)" }} onClick={() => navigate("/")}>数观</h1>
-        <div className="w-8" />
-      </header>
-
-      {/* ═══ Mobile Menu Overlay ═══ */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[60] md:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setMenuOpen(false)} />
-          <aside className="absolute left-0 top-0 bottom-0 w-[260px] flex flex-col"
-            style={{ background: "var(--bg-sidebar)", borderRight: "1px solid var(--border-default)" }}>
-            <div className="flex items-center justify-between px-4 py-3.5 border-b" style={{ borderColor: "var(--border-subtle)" }}>
-              <div>
-                <h1 className="text-lg tracking-wider font-extralight" style={{ color: "var(--text-primary)" }}>数观</h1>
-                <p className="text-[9px] tracking-[0.2em] uppercase" style={{ color: "var(--text-muted)" }}>DataPulse</p>
-              </div>
-              <button onClick={() => setMenuOpen(false)} className="p-2" style={{ color: "var(--text-muted)" }}>
-                <X size={18} />
-              </button>
-            </div>
-
-            <nav className="flex-1 px-3 pt-3 space-y-1">
-              {desktopNavItems.map((item) => (
-                <div key={item.path} className={`nav-item ${isActive(item.path) ? "active" : ""}`}
-                  onClick={() => { navigate(item.path); setMenuOpen(false); }}>
-                  <item.icon size={16} strokeWidth={1.5} />
-                  <span>{item.label}</span>
-                </div>
-              ))}
-            </nav>
-
-            <div className="px-3 pb-2">
-              <button onClick={() => { toggleTheme(); }} className="flex items-center gap-3 px-4 py-2.5 rounded-lg w-full" style={{ color: "var(--text-muted)" }}>
-                {isDark ? <Sun size={14} /> : <Moon size={14} />}
-                <span className="text-sm">{isDark ? "浅色模式" : "深色模式"}</span>
-              </button>
-            </div>
-
-            <div className="px-4 py-4 border-t" style={{ borderColor: "var(--border-subtle)" }}>
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "rgba(167, 139, 250, 0.15)" }}>
-                  <span className="text-xs" style={{ color: "var(--brand)" }}>{isDemo ? "D" : (user?.name || "U")[0]}</span>
-                </div>
-                <p className="text-xs truncate" style={{ color: "var(--text-secondary)" }}>{isDemo ? "演示用户" : (user?.name || "未登录")}</p>
-              </div>
-              <button onClick={() => { isDemo ? exitDemo() : logout(); navigate("/login"); }}
-                className="flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
-                <LogOut size={12} />
-                <span>{isDemo ? "退出演示" : "退出"}</span>
-              </button>
-            </div>
-          </aside>
-        </div>
-      )}
-
       {/* ═══ Main Content ═══ */}
-      <main className="flex-1 md:ml-[200px] min-h-screen pt-14 md:pt-0"
+      <main className="hidden min-h-screen flex-1 pt-0 min-[1180px]:ml-[76px] min-[1180px]:block"
         style={{ paddingTop: isDemo ? 72 : 56 }}>
         <Outlet />
       </main>
 
       {/* ═══ Toast Notifications ═══ */}
       <Toaster />
-
-      {/* ═══ Mobile Bottom Tab Bar ═══ */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden flex items-center justify-around h-16 px-2"
-        style={{ background: "var(--bg-sidebar)", borderTop: "1px solid var(--border-default)", backdropFilter: "blur(20px)" }}>
-        {navItems.map((item) => {
-          const active = isActive(item.path);
-          return (
-            <button key={item.path} onClick={() => navigate(item.path)}
-              className="flex flex-col items-center justify-center gap-0.5 w-16 h-14 rounded-lg transition-colors"
-              style={{ color: active ? "var(--brand)" : "var(--text-muted)" }}>
-              <item.icon size={18} strokeWidth={active ? 2 : 1.5} />
-              <span className="text-[10px] scale-90">{item.label}</span>
-            </button>
-          );
-        })}
-      </nav>
     </div>
   );
 }

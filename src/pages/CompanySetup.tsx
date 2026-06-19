@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { trpc } from "@/providers/trpc";
+import { trpc } from "@/providers/trpc-client";
 import { Building2, ArrowLeft, Check } from "lucide-react";
 
 const industries = [
@@ -56,7 +56,7 @@ export default function CompanySetup() {
         <div className="text-center max-w-md">
           <div
             className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: "rgba(167, 139, 250, 0.15)" }}
+            style={{ background: "rgba(37, 99, 235, 0.1)" }}
           >
             <Check size={28} style={{ color: "var(--brand)" }} />
           </div>
@@ -68,7 +68,7 @@ export default function CompanySetup() {
             <button
               onClick={() => navigate("/files")}
               className="px-6 py-2.5 rounded-xl text-sm font-medium"
-              style={{ background: "var(--brand)", color: "#050505" }}
+              style={{ background: "var(--brand)", color: "white" }}
             >
               上传数据
             </button>
@@ -100,7 +100,7 @@ export default function CompanySetup() {
         <div className="mb-8">
           <div
             className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-            style={{ background: "rgba(167, 139, 250, 0.1)" }}
+            style={{ background: "rgba(37, 99, 235, 0.1)" }}
           >
             <Building2 size={18} style={{ color: "var(--brand)" }} />
           </div>
@@ -182,9 +182,9 @@ export default function CompanySetup() {
                   style={
                     selectedGoals.includes(g.id)
                       ? {
-                          background: "rgba(167, 139, 250, 0.1)",
+                          background: "rgba(37, 99, 235, 0.08)",
                           color: "var(--brand)",
-                          borderColor: "rgba(167, 139, 250, 0.3)",
+                          borderColor: "rgba(37, 99, 235, 0.24)",
                         }
                       : {
                           color: "var(--text-muted)",
@@ -202,7 +202,7 @@ export default function CompanySetup() {
             onClick={handleSubmit}
             disabled={!name.trim() || createCompany.isPending}
             className="w-full py-3 rounded-xl text-sm font-medium transition-colors disabled:opacity-50"
-            style={{ background: "var(--brand)", color: "#050505" }}
+            style={{ background: "var(--brand)", color: "white" }}
           >
             {createCompany.isPending ? "创建中..." : "创建企业"}
           </button>

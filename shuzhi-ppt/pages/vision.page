@@ -1,0 +1,115 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>VISION</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>市场愿景：让数据驱动经营成为标配</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: visionNumber1
+    elementType: text
+    bounds: [60, 160, 370, 100]
+    content:
+      style: "$bigNumber"
+      fontSize: 72
+      text: |
+        <p>10万+</p>
+      wrap: false
+  - elementId: visionLabel1
+    elementType: text
+    bounds: [60, 265, 370, 30]
+    content:
+      style: "$subtitle"
+      fontSize: 20
+      text: |
+        <p>3年目标覆盖企业数</p>
+      wrap: false
+  - elementId: visionNumber2
+    elementType: text
+    bounds: [455, 160, 370, 100]
+    content:
+      style: "$bigNumber"
+      fontSize: 72
+      text: |
+        <p>50-100x</p>
+      wrap: false
+  - elementId: visionLabel2
+    elementType: text
+    bounds: [455, 265, 370, 30]
+    content:
+      style: "$subtitle"
+      fontSize: 20
+      text: |
+        <p>效率提升倍数</p>
+      wrap: false
+  - elementId: visionNumber3
+    elementType: text
+    bounds: [850, 160, 370, 100]
+    content:
+      style: "$bigNumber"
+      fontSize: 72
+      text: |
+        <p>90%+</p>
+      wrap: false
+  - elementId: visionLabel3
+    elementType: text
+    bounds: [850, 265, 370, 30]
+    content:
+      style: "$subtitle"
+      fontSize: 20
+      text: |
+        <p>成本降低比例</p>
+      wrap: false
+  - elementId: divider
+    elementType: shape
+    bounds: [60, 320, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: visionBody
+    elementType: text
+    bounds: [60, 350, 1160, 200]
+    content:
+      style: "$body"
+      text: |
+        <p>数观致力于帮助每一家企业实现<strong style="color: $accent;">用数据说话、用分析决策、用AI赋能</strong>。</p>
+        <p style="margin-top: 14px;">中小企业是中国经济的基石。当5300万+中小企业都能获得专业级经营分析能力，整个商业生态的决策效率将被重新定义。</p>
+        <p style="margin-top: 14px;">我们的目标是成为中国中小企业经营智能领域的<strong style="color: $accent;">标杆产品</strong>，让数据驱动经营从"少数企业的特权"变为"每一家企业的标配"。</p>
+  - elementId: valueProp
+    elementType: shape
+    bounds: [60, 580, 1160, 70]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: valuePropText
+    elementType: text
+    bounds: [90, 595, 1100, 40]
+    content:
+      style: "$body"
+      fontSize: 20
+      color: "$primary"
+      text: |
+        <p style="text-align: center;"><strong>数观 DataPulse — 企业经营智能的基础设施</strong></p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

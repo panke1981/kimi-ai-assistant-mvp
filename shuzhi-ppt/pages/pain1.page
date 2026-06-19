@@ -1,0 +1,111 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>MARKET PAIN POINTS</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>87%的中小企业无法有效利用经营数据</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: bigNumber
+    elementType: text
+    bounds: [60, 155, 300, 75]
+    content:
+      style: "$bigNumber"
+      text: |
+        <p>5,300万+</p>
+      wrap: false
+  - elementId: bigNumberLabel
+    elementType: text
+    bounds: [60, 235, 300, 28]
+    content:
+      style: "$label"
+      text: |
+        <p>中国中小企业数量</p>
+      wrap: false
+  - elementId: bigNumber2
+    elementType: text
+    bounds: [420, 155, 250, 75]
+    content:
+      style: "$bigNumber"
+      text: |
+        <p>87%</p>
+      wrap: false
+  - elementId: bigNumber2Label
+    elementType: text
+    bounds: [420, 235, 250, 28]
+    content:
+      style: "$label"
+      text: |
+        <p>缺乏数据化分析能力</p>
+      wrap: false
+  - elementId: bigNumber3
+    elementType: text
+    bounds: [740, 155, 300, 75]
+    content:
+      style: "$bigNumber"
+      text: |
+        <p>&lt;5%</p>
+      wrap: false
+  - elementId: bigNumber3Label
+    elementType: text
+    bounds: [740, 235, 300, 28]
+    content:
+      style: "$label"
+      text: |
+        <p>有专职数据分析师</p>
+      wrap: false
+  - elementId: divider1
+    elementType: shape
+    bounds: [60, 290, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: bodyText
+    elementType: text
+    bounds: [60, 320, 1160, 200]
+    content:
+      style: "$body"
+      text: |
+        <p>中国中小企业超<strong style="color: $accent;">5,300万家</strong>，占企业总数99%以上，贡献了60%以上的GDP。但绝大多数仍停留在"记账式"管理阶段：</p>
+        <p style="margin-top: 16px;">  经营数据散落在Excel表格中，缺乏系统化分析能力</p>
+        <p>  管理者凭经验决策，数据价值未被挖掘</p>
+        <p>  有专职数据分析师的企业不足5%，数据分析成为奢侈品</p>
+  - elementId: highlightBox
+    elementType: shape
+    bounds: [60, 560, 1160, 80]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: highlightText
+    elementType: text
+    bounds: [80, 575, 1120, 50]
+    content:
+      style: "$body"
+      fontSize: 18
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>核心矛盾：海量经营数据沉睡 vs 企业决策者"凭感觉"管理 — 数据价值缺口巨大</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

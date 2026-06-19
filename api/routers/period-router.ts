@@ -3,12 +3,14 @@ import { createRouter, authedQuery } from "../middleware";
 import { getDb } from "../queries/connection";
 import { periods, files, reports } from "@db/schema";
 import { eq, desc } from "drizzle-orm";
+import { assertCompanyOwner, assertPeriodOwner } from "../lib/ownership";
 
 export const periodRouter = createRouter({
   list: authedQuery
     .input(z.object({ companyId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       return db
         .select()
         .from(periods)
@@ -18,8 +20,9 @@ export const periodRouter = createRouter({
 
   getById: authedQuery
     .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertPeriodOwner(db, input.id, ctx.user.id);
       const [period] = await db
         .select()
         .from(periods)
@@ -38,8 +41,9 @@ export const periodRouter = createRouter({
         endDate: z.string().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       const [period] = await db
         .insert(periods)
         .values({
@@ -56,8 +60,9 @@ export const periodRouter = createRouter({
 
   delete: authedQuery
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertPeriodOwner(db, input.id, ctx.user.id);
       await db.delete(reports).where(eq(reports.periodId, input.id));
       await db.delete(files).where(eq(files.periodId, input.id));
       await db.delete(periods).where(eq(periods.id, input.id));

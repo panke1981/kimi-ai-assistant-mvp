@@ -1,0 +1,155 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>MARKET PAIN POINTS</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 1000, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>数据孤岛+工具割裂，决策链条断裂</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: system1Card
+    elementType: shape
+    bounds: [60, 160, 220, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: system1Text
+    elementType: text
+    bounds: [75, 190, 190, 60]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p style="text-align: center;"><strong>CRM</strong></p>
+        <p style="text-align: center; color: $textMuted;">客户数据</p>
+  - elementId: arrow1
+    elementType: text
+    bounds: [290, 200, 60, 40]
+    content:
+      fontSize: 24
+      color: "$textMuted"
+      text: |
+        <p style="text-align: center;">&#10007;</p>
+      wrap: false
+  - elementId: system2Card
+    elementType: shape
+    bounds: [360, 160, 220, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: system2Text
+    elementType: text
+    bounds: [375, 190, 190, 60]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p style="text-align: center;"><strong>ERP</strong></p>
+        <p style="text-align: center; color: $textMuted;">财务数据</p>
+  - elementId: arrow2
+    elementType: text
+    bounds: [590, 200, 60, 40]
+    content:
+      fontSize: 24
+      color: "$textMuted"
+      text: |
+        <p style="text-align: center;">&#10007;</p>
+      wrap: false
+  - elementId: system3Card
+    elementType: shape
+    bounds: [660, 160, 220, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: system3Text
+    elementType: text
+    bounds: [675, 190, 190, 60]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p style="text-align: center;"><strong>WMS</strong></p>
+        <p style="text-align: center; color: $textMuted;">库存数据</p>
+  - elementId: arrow3
+    elementType: text
+    bounds: [890, 200, 60, 40]
+    content:
+      fontSize: 24
+      color: "$textMuted"
+      text: |
+        <p style="text-align: center;">&#10007;</p>
+      wrap: false
+  - elementId: system4Card
+    elementType: shape
+    bounds: [960, 160, 220, 120]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: system4Text
+    elementType: text
+    bounds: [975, 190, 190, 60]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p style="text-align: center;"><strong>其他</strong></p>
+        <p style="text-align: center; color: $textMuted;">营销/生产数据</p>
+  - elementId: impactTitle
+    elementType: text
+    bounds: [60, 330, 500, 35]
+    content:
+      style: "$heading"
+      fontSize: 22
+      text: |
+        <p>对企业经营的影响</p>
+      wrap: false
+  - elementId: impactBody
+    elementType: text
+    bounds: [60, 380, 1160, 250]
+    content:
+      style: "$body"
+      text: |
+        <p><span style="color: $accent;">&#9654;</span> 老板需要同时打开<strong>5-6个系统</strong>才能了解经营状况</p>
+        <p style="margin-top: 14px;"><span style="color: $accent;">&#9654;</span> 各系统数据口径不统一，同一指标在不同系统中数值不同</p>
+        <p style="margin-top: 14px;"><span style="color: $accent;">&#9654;</span> 决策效率低下：从发现问题到拿到数据需要数小时甚至数天</p>
+        <p style="margin-top: 14px;"><span style="color: $accent;">&#9654;</span> 风险发现滞后：等到财务月报出来，问题已经存在了一个月</p>
+  - elementId: highlightBox
+    elementType: shape
+    bounds: [60, 640, 1160, 40]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$accent"}
+  - elementId: highlightText
+    elementType: text
+    bounds: [80, 645, 1120, 30]
+    content:
+      style: "$body"
+      fontSize: 16
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>本质问题：数据分散、系统割裂、分析滞后 → 经营决策缺乏实时、全面的数据支撑</p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

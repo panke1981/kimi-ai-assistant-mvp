@@ -3,6 +3,7 @@ import { createRouter, authedQuery } from "../middleware";
 import { getDb } from "../queries/connection";
 import { companies, periods } from "@db/schema";
 import { eq, desc } from "drizzle-orm";
+import { assertCompanyOwner, deleteCompanyTree } from "../lib/ownership";
 
 export const companyRouter = createRouter({
   list: authedQuery.query(async ({ ctx }) => {
@@ -16,8 +17,9 @@ export const companyRouter = createRouter({
 
   getById: authedQuery
     .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.id, ctx.user.id);
       const [company] = await db
         .select()
         .from(companies)
@@ -72,18 +74,20 @@ export const companyRouter = createRouter({
         goals: z.string().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
       const { id, ...data } = input;
+      await assertCompanyOwner(db, id, ctx.user.id);
       await db.update(companies).set(data).where(eq(companies.id, id));
       return { success: true };
     }),
 
   delete: authedQuery
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
-      await db.delete(companies).where(eq(companies.id, input.id));
+      await assertCompanyOwner(db, input.id, ctx.user.id);
+      await deleteCompanyTree(db, input.id);
       return { success: true };
     }),
 });

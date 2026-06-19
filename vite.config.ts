@@ -25,5 +25,24 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (id.includes("@tanstack") || id.includes("@trpc") || id.includes("superjson")) {
+            return "vendor-data";
+          }
+          if (id.includes("recharts") || id.includes("d3-") || id.includes("victory-vendor")) {
+            return "vendor-charts";
+          }
+          if (id.includes("xlsx")) {
+            return "vendor-xlsx";
+          }
+          if (id.includes("@radix-ui") || id.includes("lucide-react")) {
+            return "vendor-ui";
+          }
+        },
+      },
+    },
   },
 });

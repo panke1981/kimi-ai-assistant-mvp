@@ -1,0 +1,130 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>CORE FEATURES</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 1000, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>AI经营分析报告：深度洞察+风险预警</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: leftCard
+    elementType: shape
+    bounds: [60, 150, 560, 240]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: leftIcon
+    elementType: icon
+    bounds: [90, 175, 32, 32]
+    iconName: fas:chart-line
+    fill:
+      type: solid
+      color: "$accent"
+  - elementId: leftTitle
+    elementType: text
+    bounds: [135, 175, 300, 35]
+    content:
+      style: "$heading"
+      fontSize: 22
+      text: |
+        <p>不止于数据罗列</p>
+      wrap: false
+  - elementId: leftBody
+    elementType: text
+    bounds: [90, 225, 510, 140]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><span style="color: $accent;">&#9632;</span> 收入趋势分析 — 环比/同比变化一目了然</p>
+        <p style="margin-top: 8px;"><span style="color: $accent;">&#9632;</span> 成本结构洞察 — 识别成本异常波动</p>
+        <p style="margin-top: 8px;"><span style="color: $accent;">&#9632;</span> 风险提示 — 早期发现经营风险信号</p>
+  - elementId: rightCard
+    elementType: shape
+    bounds: [660, 150, 560, 240]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: rightIcon
+    elementType: icon
+    bounds: [690, 175, 32, 32]
+    iconName: fas:lightbulb
+    fill:
+      type: solid
+      color: "$accent"
+  - elementId: rightTitle
+    elementType: text
+    bounds: [735, 175, 300, 35]
+    content:
+      style: "$heading"
+      fontSize: 22
+      text: |
+        <p>可执行的AI建议</p>
+      wrap: false
+  - elementId: rightBody
+    elementType: text
+    bounds: [690, 225, 510, 140]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><span style="color: $accent;">&#9632;</span> 经营建议 — 基于数据的优化方向</p>
+        <p style="margin-top: 8px;"><span style="color: $accent;">&#9632;</span> 数据缺口发现 — 指出缺失的关键数据</p>
+        <p style="margin-top: 8px;"><span style="color: $accent;">&#9632;</span> 从"看数据"升级为"懂数据"</p>
+  - elementId: reportPreview
+    elementType: shape
+    bounds: [60, 420, 1160, 230]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: previewLabel
+    elementType: text
+    bounds: [90, 435, 200, 25]
+    content:
+      style: "$label"
+      color: "$primary"
+      text: |
+        <p>REPORT PREVIEW</p>
+      wrap: false
+  - elementId: previewTitle
+    elementType: text
+    bounds: [90, 465, 1100, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>2026年4月 经营分析报告</strong></p>
+      wrap: false
+  - elementId: previewBody
+    elementType: text
+    bounds: [90, 505, 1100, 120]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>本期营业收入 2,846,500 元，毛利率 45.0%，净利率 30.0%。整体经营状况良好，盈利能力强劲。</p>
+        <p style="margin-top: 8px;"><span style="color: $accent;">&#9679;</span> 收入环比增长 12.5%，增长势头良好</p>
+        <p style="margin-top: 4px;"><span style="color: $accent;">&#9679;</span> 毛利率 45.0%，盈利能力处于优秀水平</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

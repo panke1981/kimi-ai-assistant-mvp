@@ -1,0 +1,173 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>MARKET PAIN POINTS</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 1000, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>传统分析方式：高成本、长周期、低覆盖</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: costCard
+    elementType: shape
+    bounds: [60, 150, 360, 240]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: costIcon
+    elementType: icon
+    bounds: [90, 180, 40, 40]
+    iconName: fas:dollar-sign
+    fill:
+      type: solid
+      color: "$accent"
+  - elementId: costNumber
+    elementType: text
+    bounds: [90, 230, 300, 60]
+    content:
+      style: "$bigNumber"
+      fontSize: 48
+      text: |
+        <p>15-30万</p>
+      wrap: false
+  - elementId: costLabel
+    elementType: text
+    bounds: [90, 295, 300, 30]
+    content:
+      style: "$subtitle"
+      text: |
+        <p>财务分析师年薪</p>
+      wrap: false
+  - elementId: costDesc
+    elementType: text
+    bounds: [90, 330, 300, 40]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>中小企业难以负担专职分析人力成本</p>
+  - elementId: timeCard
+    elementType: shape
+    bounds: [460, 150, 360, 240]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: timeIcon
+    elementType: icon
+    bounds: [490, 180, 40, 40]
+    iconName: fas:clock
+    fill:
+      type: solid
+      color: "$accent"
+  - elementId: timeNumber
+    elementType: text
+    bounds: [490, 230, 300, 60]
+    content:
+      style: "$bigNumber"
+      fontSize: 48
+      text: |
+        <p>3-5天</p>
+      wrap: false
+  - elementId: timeLabel
+    elementType: text
+    bounds: [490, 295, 300, 30]
+    content:
+      style: "$subtitle"
+      text: |
+        <p>手工报告周期</p>
+      wrap: false
+  - elementId: timeDesc
+    elementType: text
+    bounds: [490, 330, 300, 40]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>从数据整理到报告产出，耗时漫长</p>
+  - elementId: coverageCard
+    elementType: shape
+    bounds: [860, 150, 360, 240]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: coverageIcon
+    elementType: icon
+    bounds: [890, 180, 40, 40]
+    iconName: fas:eye
+    fill:
+      type: solid
+      color: "$accent"
+  - elementId: coverageNumber
+    elementType: text
+    bounds: [890, 230, 300, 60]
+    content:
+      style: "$bigNumber"
+      fontSize: 48
+      text: |
+        <p>仅财务</p>
+      wrap: false
+  - elementId: coverageLabel
+    elementType: text
+    bounds: [890, 295, 300, 30]
+    content:
+      style: "$subtitle"
+      text: |
+        <p>分析维度单一</p>
+      wrap: false
+  - elementId: coverageDesc
+    elementType: text
+    bounds: [890, 330, 300, 40]
+    content:
+      style: "$body"
+      fontSize: 16
+      color: "$textMuted"
+      text: |
+        <p>无法深入业务层面，缺乏业务洞察</p>
+  - elementId: bottomHighlight
+    elementType: shape
+    bounds: [60, 430, 1160, 210]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: comparisonTitle
+    elementType: text
+    bounds: [90, 450, 400, 35]
+    content:
+      style: "$heading"
+      fontSize: 22
+      text: |
+        <p>人工分析 vs AI分析的差距</p>
+      wrap: false
+  - elementId: comparisonBody
+    elementType: text
+    bounds: [90, 495, 1100, 120]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p>  人工分析存在<strong style="color: $accent;">主观偏差</strong>，不同分析师得出不同结论</p>
+        <p>  难以<strong style="color: $accent;">持续追踪</strong>和<strong style="color: $accent;">跨期对比</strong>，每次都是"从零开始"</p>
+        <p>  分析结果停留在"报表"层面，缺乏<strong style="color: $accent;"> actionable insights</strong>（可执行洞察）</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

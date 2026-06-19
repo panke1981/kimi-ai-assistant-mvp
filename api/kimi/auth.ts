@@ -11,6 +11,41 @@ import { users as kimiUsers } from "./platform";
 import { findUserByUnionId, upsertUser } from "../queries/users";
 import type { TokenResponse } from "./types";
 
+function getPublicOrigin(headers: Headers) {
+  const proto = headers.get("x-forwarded-proto") || "http";
+  const host = headers.get("x-forwarded-host") || headers.get("host");
+  if (!host) return "";
+  return `${proto}://${host}`;
+}
+
+function safeReturnPath(value: string | undefined) {
+  if (!value) return "/";
+  try {
+    const decoded = decodeURIComponent(value);
+    if (decoded.startsWith("/") && !decoded.startsWith("//")) return decoded;
+  } catch {
+    // Fall through to the safe default.
+  }
+  return "/";
+}
+
+function encodeOAuthState(input: { redirectUri: string; returnPath: string }) {
+  return btoa(JSON.stringify(input));
+}
+
+function decodeOAuthState(state: string) {
+  const decoded = atob(state);
+  try {
+    const parsed = JSON.parse(decoded) as { redirectUri?: string; returnPath?: string };
+    return {
+      redirectUri: parsed.redirectUri || decoded,
+      returnPath: safeReturnPath(parsed.returnPath),
+    };
+  } catch {
+    return { redirectUri: decoded, returnPath: "/" };
+  }
+}
+
 async function exchangeAuthCode(
   code: string,
   redirectUri: string,
@@ -94,6 +129,31 @@ export async function authenticateRequest(headers: Headers) {
   return user;
 }
 
+export function createOAuthStartHandler() {
+  return async (c: Context) => {
+    if (!env.kimiAuthUrl || !env.appId) {
+      console.error("[OAuth] Missing KIMI_AUTH_URL or APP_ID");
+      return c.redirect("/login?error=oauth_config_missing", 302);
+    }
+
+    const origin = getPublicOrigin(c.req.raw.headers);
+    if (!origin) {
+      return c.redirect("/login?error=oauth_origin_missing", 302);
+    }
+
+    const redirectUri = `${origin}/api/oauth/callback`;
+    const returnPath = safeReturnPath(c.req.query("return"));
+    const url = new URL(`${env.kimiAuthUrl}/api/oauth/authorize`);
+    url.searchParams.set("client_id", env.appId);
+    url.searchParams.set("redirect_uri", redirectUri);
+    url.searchParams.set("response_type", "code");
+    url.searchParams.set("scope", "profile");
+    url.searchParams.set("state", encodeOAuthState({ redirectUri, returnPath }));
+
+    return c.redirect(url.toString(), 302);
+  };
+}
+
 export function createOAuthCallbackHandler() {
   return async (c: Context) => {
     const code = c.req.query("code");
@@ -116,7 +176,7 @@ export function createOAuthCallbackHandler() {
     }
 
     try {
-      const redirectUri = atob(state);
+      const { redirectUri, returnPath } = decodeOAuthState(state);
       const tokenResp = await exchangeAuthCode(code, redirectUri);
       const { userId } = await verifyAccessToken(tokenResp.access_token);
       const userProfile = await kimiUsers.getProfile(tokenResp.access_token);
@@ -142,10 +202,10 @@ export function createOAuthCallbackHandler() {
         maxAge: Session.maxAgeMs / 1000,
       });
 
-      return c.redirect("/", 302);
+      return c.redirect(returnPath, 302);
     } catch (error) {
       console.error("[OAuth] Callback failed", error);
-      return c.json({ error: "OAuth callback failed" }, 500);
+      return c.redirect("/login?error=oauth_callback_failed", 302);
     }
   };
 }

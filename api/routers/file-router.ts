@@ -6,16 +6,16 @@ import { eq, desc } from "drizzle-orm";
 import { mkdir, writeFile, readFile } from "fs/promises";
 import { join } from "path";
 import { env } from "../lib/env";
+import { assertCompanyOwner, assertFileOwner, assertPeriodOwner } from "../lib/ownership";
 
-const UPLOAD_DIR = env.isStaging
-  ? process.env.UPLOAD_DIR || "./uploads-test"
-  : "/mnt/agents/output/app/uploads";
+const UPLOAD_DIR = env.uploadDir;
 
 export const fileRouter = createRouter({
   list: authedQuery
     .input(z.object({ periodId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertPeriodOwner(db, input.periodId, ctx.user.id);
       return db
         .select()
         .from(files)
@@ -44,8 +44,13 @@ export const fileRouter = createRouter({
         base64Content: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
+      const period = await assertPeriodOwner(db, input.periodId, ctx.user.id);
+      if (period.companyId !== input.companyId) {
+        throw new Error("Period does not belong to company");
+      }
 
       await mkdir(join(UPLOAD_DIR, String(input.periodId)), { recursive: true });
 
@@ -85,25 +90,28 @@ export const fileRouter = createRouter({
         confirmedFields: z.any().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
       const { id, ...data } = input;
+      await assertFileOwner(db, id, ctx.user.id);
       await db.update(files).set(data).where(eq(files.id, id));
       return { success: true };
     }),
 
   delete: authedQuery
     .input(z.object({ id: z.number() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertFileOwner(db, input.id, ctx.user.id);
       await db.delete(files).where(eq(files.id, input.id));
       return { success: true };
     }),
 
   getContent: authedQuery
     .input(z.object({ id: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertFileOwner(db, input.id, ctx.user.id);
       const [file] = await db
         .select()
         .from(files)

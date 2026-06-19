@@ -1,31 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { useDemo } from "./DemoProvider";
+import { useDemo } from "@/hooks/useDemo";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isLoading } = useAuth({ redirectOnUnauthenticated: false });
   const { isDemo } = useDemo();
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (isDemo) {
-      setChecked(true);
-      return;
-    }
-    if (!isLoading) {
-      setChecked(true);
-      if (!isAuthenticated) {
-        const returnPath = encodeURIComponent(location.pathname + location.search);
-        navigate(`/login?return=${returnPath}`, { replace: true });
-      }
+    if (!isDemo && !isLoading && !isAuthenticated) {
+      const returnPath = encodeURIComponent(location.pathname + location.search);
+      navigate(`/login?return=${returnPath}`, { replace: true });
     }
   }, [isLoading, isAuthenticated, isDemo, navigate, location]);
 
-  // Don't render anything until auth check is complete (unless in demo mode)
-  if (!checked && !isDemo) {
+  // Don't render anything until auth check is complete unless local workspace mode is active.
+  if (isLoading && !isDemo) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-base)" }}>
         <div className="text-center">
@@ -36,7 +28,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Not authenticated and not in demo - show loading (redirect will happen)
+  // Not authenticated and not in local workspace mode: show loading while redirect happens.
   if (!isAuthenticated && !isDemo) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-base)" }}>

@@ -13,7 +13,19 @@ export const aiSettingsRouter = createRouter({
       .from(aiSettings)
       .where(eq(aiSettings.userId, ctx.user.id))
       .limit(1);
-    return setting ?? null;
+    if (!setting) return null;
+    return {
+      id: setting.id,
+      userId: setting.userId,
+      provider: setting.provider,
+      baseUrl: setting.baseUrl,
+      model: setting.model,
+      isActive: setting.isActive,
+      createdAt: setting.createdAt,
+      updatedAt: setting.updatedAt,
+      hasApiKey: Boolean(setting.apiKey),
+      apiKeyPreview: setting.apiKey ? `...${setting.apiKey.slice(-4)}` : null,
+    };
   }),
 
   // Save or update AI settings
@@ -42,6 +54,7 @@ export const aiSettingsRouter = createRouter({
           .update(aiSettings)
           .set({
             provider: input.provider,
+            // MVP note: persisted as plain text for now. Encrypt before production use.
             apiKey: input.apiKey,
             baseUrl: input.baseUrl || null,
             model: input.model,

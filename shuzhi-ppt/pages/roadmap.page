@@ -1,0 +1,174 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>ROADMAP</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>产品路线图：从工具到平台到生态</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: timelineLine
+    elementType: shape
+    bounds: [60, 200, 1160, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$primary"}
+  - elementId: dot1
+    elementType: shape
+    bounds: [160, 190, 24, 24]
+    shapeName: ellipse
+    fill: {type: solid, color: "$accent"}
+  - elementId: dot2
+    elementType: shape
+    bounds: [560, 190, 24, 24]
+    shapeName: ellipse
+    fill: {type: solid, color: "$accent"}
+  - elementId: dot3
+    elementType: shape
+    bounds: [960, 190, 24, 24]
+    shapeName: ellipse
+    fill: {type: solid, color: "$accent"}
+  - elementId: phase1Label
+    elementType: text
+    bounds: [80, 165, 200, 22]
+    content:
+      style: "$label"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>SHORT TERM</p>
+      wrap: false
+  - elementId: phase1Year
+    elementType: text
+    bounds: [60, 240, 300, 45]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>2026 短期</p>
+      wrap: false
+  - elementId: phase1Card
+    elementType: shape
+    bounds: [60, 295, 360, 340]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: phase1Body
+    elementType: text
+    bounds: [80, 315, 320, 300]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong style="color: $accent;">目标</strong></p>
+        <p>完善核心功能，服务1000+中小企业</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">重点</strong></p>
+        <p>  AI字段识别准确率提升至98%</p>
+        <p>  新增行业模板库（零售、餐饮、制造）</p>
+        <p>  完善移动端体验</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">指标</strong></p>
+        <p>  服务企业1000+，月活用户5000+</p>
+  - elementId: phase2Label
+    elementType: text
+    bounds: [480, 165, 200, 22]
+    content:
+      style: "$label"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>MID TERM</p>
+      wrap: false
+  - elementId: phase2Year
+    elementType: text
+    bounds: [460, 240, 300, 45]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>2027 中期</p>
+      wrap: false
+  - elementId: phase2Card
+    elementType: shape
+    bounds: [460, 295, 360, 340]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: phase2Body
+    elementType: text
+    bounds: [480, 315, 320, 300]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong style="color: $accent;">目标</strong></p>
+        <p>从工具升级为平台，开放生态</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">重点</strong></p>
+        <p>  接入更多数据源（ERP/CRM/WMS）</p>
+        <p>  构建行业对标库</p>
+        <p>  开放API，第三方集成</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">指标</strong></p>
+        <p>  服务企业5万+，开放API 100+</p>
+  - elementId: phase3Label
+    elementType: text
+    bounds: [880, 165, 200, 22]
+    content:
+      style: "$label"
+      fill:
+      type: solid
+      color: "$accent"
+      text: |
+        <p>LONG TERM</p>
+      wrap: false
+  - elementId: phase3Year
+    elementType: text
+    bounds: [860, 240, 360, 45]
+    content:
+      style: "$heading"
+      fontSize: 26
+      text: |
+        <p>2028+ 长期</p>
+      wrap: false
+  - elementId: phase3Card
+    elementType: shape
+    bounds: [860, 295, 360, 340]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$primary"}
+  - elementId: phase3Body
+    elementType: text
+    bounds: [880, 315, 320, 300]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong style="color: $accent;">目标</strong></p>
+        <p>打造企业经营智能生态</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">重点</strong></p>
+        <p>  行业AI经营大脑</p>
+        <p>  上下游供应链分析</p>
+        <p>  成为数字化经营基础设施</p>
+        <p style="margin-top: 14px;"><strong style="color: $accent;">指标</strong></p>
+        <p>  服务企业10万+，生态伙伴500+</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

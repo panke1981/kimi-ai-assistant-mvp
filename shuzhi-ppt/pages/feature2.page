@@ -1,0 +1,317 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>CORE FEATURES</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>智能指标计算：14项核心指标自动产出</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: metric1
+    elementType: shape
+    bounds: [60, 150, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric1Name
+    elementType: text
+    bounds: [75, 160, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>营业收入</strong></p>
+      wrap: false
+  - elementId: metric1Cat
+    elementType: text
+    bounds: [75, 195, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>REVENUE</p>
+      wrap: false
+  - elementId: metric1Desc
+    elementType: text
+    bounds: [75, 225, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>核心收入来源</p>
+      wrap: false
+  - elementId: metric2
+    elementType: shape
+    bounds: [356, 150, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric2Name
+    elementType: text
+    bounds: [371, 160, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>毛利润</strong></p>
+      wrap: false
+  - elementId: metric2Cat
+    elementType: text
+    bounds: [371, 195, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>PROFIT</p>
+      wrap: false
+  - elementId: metric2Desc
+    elementType: text
+    bounds: [371, 225, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>收入-商品成本</p>
+      wrap: false
+  - elementId: metric3
+    elementType: shape
+    bounds: [652, 150, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric3Name
+    elementType: text
+    bounds: [667, 160, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>净利润</strong></p>
+      wrap: false
+  - elementId: metric3Cat
+    elementType: text
+    bounds: [667, 195, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>PROFIT</p>
+      wrap: false
+  - elementId: metric3Desc
+    elementType: text
+    bounds: [667, 225, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>毛利-运营费用</p>
+      wrap: false
+  - elementId: metric4
+    elementType: shape
+    bounds: [948, 150, 272, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric4Name
+    elementType: text
+    bounds: [963, 160, 242, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>毛利率</strong></p>
+      wrap: false
+  - elementId: metric4Cat
+    elementType: text
+    bounds: [963, 195, 242, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>EFFICIENCY</p>
+      wrap: false
+  - elementId: metric4Desc
+    elementType: text
+    bounds: [963, 225, 242, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>毛利/收入</p>
+      wrap: false
+  - elementId: metric5
+    elementType: shape
+    bounds: [60, 285, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric5Name
+    elementType: text
+    bounds: [75, 295, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>净利率</strong></p>
+      wrap: false
+  - elementId: metric5Cat
+    elementType: text
+    bounds: [75, 330, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>EFFICIENCY</p>
+      wrap: false
+  - elementId: metric5Desc
+    elementType: text
+    bounds: [75, 360, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>净利/收入</p>
+      wrap: false
+  - elementId: metric6
+    elementType: shape
+    bounds: [356, 285, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric6Name
+    elementType: text
+    bounds: [371, 295, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>客单价</strong></p>
+      wrap: false
+  - elementId: metric6Cat
+    elementType: text
+    bounds: [371, 330, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>EFFICIENCY</p>
+      wrap: false
+  - elementId: metric6Desc
+    elementType: text
+    bounds: [371, 360, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>收入/交易笔数</p>
+      wrap: false
+  - elementId: metric7
+    elementType: shape
+    bounds: [652, 285, 270, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric7Name
+    elementType: text
+    bounds: [667, 295, 240, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>成本率</strong></p>
+      wrap: false
+  - elementId: metric7Cat
+    elementType: text
+    bounds: [667, 330, 240, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>EFFICIENCY</p>
+      wrap: false
+  - elementId: metric7Desc
+    elementType: text
+    bounds: [667, 360, 240, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>成本/收入</p>
+      wrap: false
+  - elementId: metric8
+    elementType: shape
+    bounds: [948, 285, 272, 110]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: metric8Name
+    elementType: text
+    bounds: [963, 295, 242, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong>费用率</strong></p>
+      wrap: false
+  - elementId: metric8Cat
+    elementType: text
+    bounds: [963, 330, 242, 25]
+    content:
+      style: "$label"
+      text: |
+        <p>EFFICIENCY</p>
+      wrap: false
+  - elementId: metric8Desc
+    elementType: text
+    bounds: [963, 360, 242, 25]
+    content:
+      style: "$body"
+      fontSize: 14
+      color: "$textMuted"
+      text: |
+        <p>费用/收入</p>
+      wrap: false
+  - elementId: moreText
+    elementType: text
+    bounds: [60, 420, 1160, 30]
+    content:
+      style: "$body"
+      fontSize: 18
+      color: "$textMuted"
+      text: |
+        <p style="text-align: center;">…… 以及交易笔数、销售数量、平均单价、单件利润等 <strong style="color: $accent;">14项核心指标</strong>，支持多期对比</p>
+  - elementId: chartArea
+    elementType: chart
+    bounds: [60, 470, 1160, 180]
+    content:
+      chartType: bar
+      data:
+        labels: ["营收", "成本", "毛利", "净利"]
+        datasets:
+          - label: "本期"
+            data: [2846500, 1565575, 1280925, 853950]
+          - label: "上期"
+            data: [2530000, 1450000, 1080000, 720000]
+      colors: ["$primary", "$secondary", "$accent", "$textMuted"]
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

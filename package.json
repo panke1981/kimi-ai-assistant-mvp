@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "shuzhi-business-mvp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "NODE_ENV=production node dist/boot.js",
-    "check": "tsc -b",
+    "check": "tsc -p tsconfig.app.json --noEmit --incremental false && tsc -p tsconfig.server.json --noEmit --incremental false && tsc -p tsconfig.node.json --noEmit --incremental false",
     "format": "prettier --write .",
     "test": "vitest run",
     "db:generate": "drizzle-kit generate",

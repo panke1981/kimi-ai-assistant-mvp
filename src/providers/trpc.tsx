@@ -1,18 +1,16 @@
-import { createTRPCReact } from "@trpc/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import superjson from "superjson";
-import type { AppRouter } from "../../api/router";
 import type { ReactNode } from "react";
 
-export const trpc = createTRPCReact<AppRouter>();
+import { getTRPCErrorStatus, trpc } from "@/providers/trpc-client";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: (failureCount, error: any) => {
+      retry: (failureCount, error: unknown) => {
         // Don't retry on 401 unauthorized
-        if (error?.data?.httpStatus === 401) return false;
+        if (getTRPCErrorStatus(error) === 401) return false;
         return failureCount < 2;
       },
       refetchOnWindowFocus: false,

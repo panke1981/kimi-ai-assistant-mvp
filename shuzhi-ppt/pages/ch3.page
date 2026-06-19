@@ -1,0 +1,49 @@
+pageType: chapter
+background:
+  type: image
+  src: "/mnt/agents/output/datapulse-ppt/images/chapter3_bg.png"
+  mask:
+    type: gradient
+    gradientType: linear
+    direction: to_right
+    stops:
+      - {color: "rgba(10,10,15,0.85)", position: 0}
+      - {color: "rgba(10,10,15,0.4)", position: 1}
+elements:
+  - elementId: chapterNumber
+    elementType: text
+    bounds: [60, 180, 300, 100]
+    opacity: 0.15
+    content:
+      fontSize: 96
+      fontFamily: "Liter"
+      color: "$primary"
+      text: |
+        <p>03</p>
+      wrap: false
+  - elementId: chapterTitle
+    elementType: text
+    bounds: [60, 290, 600, 60]
+    content:
+      style: "$chapterTitle"
+      text: |
+        <p>未来展望</p>
+      wrap: false
+  - elementId: accentLine
+    elementType: shape
+    bounds: [60, 365, 80, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$accent"}
+  - elementId: chapterSubtitle
+    elementType: text
+    bounds: [60, 385, 700, 35]
+    content:
+      style: "$subtitle"
+      text: |
+        <p>构建企业经营智能的基础设施</p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

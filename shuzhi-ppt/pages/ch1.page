@@ -1,0 +1,49 @@
+pageType: chapter
+background:
+  type: image
+  src: "/mnt/agents/output/datapulse-ppt/images/chapter1_bg.png"
+  mask:
+    type: gradient
+    gradientType: linear
+    direction: to_right
+    stops:
+      - {color: "rgba(10,10,15,0.85)", position: 0}
+      - {color: "rgba(10,10,15,0.4)", position: 1}
+elements:
+  - elementId: chapterNumber
+    elementType: text
+    bounds: [60, 180, 300, 100]
+    opacity: 0.15
+    content:
+      fontSize: 96
+      fontFamily: "Liter"
+      color: "$primary"
+      text: |
+        <p>01</p>
+      wrap: false
+  - elementId: chapterTitle
+    elementType: text
+    bounds: [60, 290, 600, 60]
+    content:
+      style: "$chapterTitle"
+      text: |
+        <p>市场痛点</p>
+      wrap: false
+  - elementId: accentLine
+    elementType: shape
+    bounds: [60, 365, 80, 3]
+    shapeName: rect
+    fill: {type: solid, color: "$accent"}
+  - elementId: chapterSubtitle
+    elementType: text
+    bounds: [60, 385, 600, 35]
+    content:
+      style: "$subtitle"
+      text: |
+        <p>中小企业经营分析的现实困境</p>
+      wrap: false
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

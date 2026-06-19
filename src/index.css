@@ -10,9 +10,9 @@
 
 :root {
   /* Brand */
-  --brand: #A78BFA;
-  --brand-hover: #B89CFB;
-  --brand-blue: #3B82F6;
+  --brand: #2563EB;
+  --brand-hover: #1D4ED8;
+  --brand-blue: #0EA5E9;
 
   /* Dark theme (default, enhanced contrast) */
   --bg-base: #000000;
@@ -32,40 +32,40 @@
   --border-default: #2A2A2A;
   --border-hover: #404040;
   --border-subtle: #1A1A1A;
-  --border-brand: rgba(167, 139, 250, 0.35);
+  --border-brand: rgba(37, 99, 235, 0.35);
 
   --success: #34D399;
   --warning: #FBBF24;
   --danger: #F87171;
 
-  --shadow-glow: 0 0 20px rgba(167, 139, 250, 0.12);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.12);
 }
 
 [data-theme="light"] {
-  --bg-base: #F5F5F7;
+  --bg-base: #F6F8FB;
   --bg-sidebar: #FFFFFF;
   --bg-card: #FFFFFF;
-  --bg-input: #F0F0F2;
-  --bg-hover: #EBEBEF;
+  --bg-input: #F8FAFC;
+  --bg-hover: #EEF4FF;
   --bg-elevated: #FFFFFF;
   --bg-glass: rgba(255, 255, 255, 0.78);
 
-  --text-primary: #111111;
-  --text-secondary: rgba(0, 0, 0, 0.72);
-  --text-tertiary: #555555;
-  --text-muted: #888888;
-  --text-disabled: #BBBBBB;
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-tertiary: #64748B;
+  --text-muted: #94A3B8;
+  --text-disabled: #CBD5E1;
 
-  --border-default: #E0E0E0;
-  --border-hover: #CCCCCC;
-  --border-subtle: #EEEEEE;
-  --border-brand: rgba(167, 139, 250, 0.45);
+  --border-default: #DDE5F0;
+  --border-hover: #C7D2E4;
+  --border-subtle: #E9EEF6;
+  --border-brand: rgba(37, 99, 235, 0.28);
 
-  --success: #059669;
-  --warning: #D97706;
+  --success: #0F766E;
+  --warning: #B45309;
   --danger: #DC2626;
 
-  --shadow-glow: 0 0 20px rgba(167, 139, 250, 0.18);
+  --shadow-glow: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
 /* ─── Base ───────────────────────────────── */
@@ -108,7 +108,7 @@
 
   /* Selection */
   ::selection {
-    background: rgba(167, 139, 250, 0.25);
+    background: rgba(37, 99, 235, 0.22);
     color: var(--text-primary);
   }
 }
@@ -158,11 +158,11 @@
   }
   .nav-item.active {
     color: var(--brand);
-    background: rgba(167, 139, 250, 0.08);
+    background: rgba(37, 99, 235, 0.08);
   }
 
   [data-theme="light"] .nav-item.active {
-    background: rgba(167, 139, 250, 0.1);
+    background: rgba(37, 99, 235, 0.1);
   }
 
   /* Data mono font */

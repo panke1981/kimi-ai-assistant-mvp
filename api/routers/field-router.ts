@@ -3,12 +3,14 @@ import { createRouter, authedQuery } from "../middleware";
 import { getDb } from "../queries/connection";
 import { fieldDictionary } from "@db/schema";
 import { eq, and } from "drizzle-orm";
+import { assertCompanyOwner, assertFieldOwner } from "../lib/ownership";
 
 export const fieldRouter = createRouter({
   list: authedQuery
     .input(z.object({ companyId: z.number() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       return db
         .select()
         .from(fieldDictionary)
@@ -18,8 +20,9 @@ export const fieldRouter = createRouter({
 
   getByOriginalField: authedQuery
     .input(z.object({ companyId: z.number(), originalField: z.string() }))
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       const [field] = await db
         .select()
         .from(fieldDictionary)
@@ -53,8 +56,9 @@ export const fieldRouter = createRouter({
         confidence: z.number().optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       const [field] = await db
         .insert(fieldDictionary)
         .values({
@@ -88,9 +92,10 @@ export const fieldRouter = createRouter({
         isConfirmed: z.enum(["confirmed", "ignored"]),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
       const { id, ...data } = input;
+      await assertFieldOwner(db, id, ctx.user.id);
       await db
         .update(fieldDictionary)
         .set(data)
@@ -112,8 +117,9 @@ export const fieldRouter = createRouter({
         ),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
       const values = input.fields.map((f) => ({
         companyId: input.companyId,
         originalField: f.originalField,

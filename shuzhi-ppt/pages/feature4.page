@@ -1,0 +1,126 @@
+pageType: content
+background:
+  type: solid
+  color: "$bgContent"
+elements:
+  - elementId: pageLabel
+    elementType: text
+    bounds: [60, 35, 200, 20]
+    content:
+      style: "$label"
+      text: |
+        <p>CORE FEATURES</p>
+      wrap: false
+  - elementId: pageTitle
+    elementType: text
+    bounds: [60, 60, 900, 45]
+    content:
+      style: "$heading"
+      text: |
+        <p>AI经营助手：7×24小时的经营顾问</p>
+      wrap: false
+  - elementId: titleUnderline
+    elementType: shape
+    bounds: [60, 115, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}
+  - elementId: chatBg
+    elementType: shape
+    bounds: [60, 150, 700, 490]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBg"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: chatHeader
+    elementType: shape
+    bounds: [60, 150, 700, 50]
+    shapeName: rect
+    fill: {type: solid, color: "$primary"}
+  - elementId: chatHeaderText
+    elementType: text
+    bounds: [80, 160, 400, 30]
+    content:
+      fontSize: 16
+      fontFamily: "Liter, MiSans"
+      color: "#FFFFFF"
+      text: |
+        <p><strong>AI 经营助手</strong></p>
+      wrap: false
+  - elementId: userMsg1
+    elementType: shape
+    bounds: [400, 220, 340, 60]
+    shapeName: rect
+    fill: {type: solid, color: "#2A2A35"}
+  - elementId: userMsg1Text
+    elementType: text
+    bounds: [415, 230, 310, 40]
+    content:
+      fontSize: 16
+      fontFamily: "Liter, MiSans"
+      color: "$text"
+      text: |
+        <p>这个月毛利率为什么下降了？</p>
+  - elementId: aiMsg1
+    elementType: shape
+    bounds: [90, 300, 500, 100]
+    shapeName: rect
+    fill: {type: solid, color: "#1A1A24"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: aiMsg1Text
+    elementType: text
+    bounds: [105, 310, 470, 80]
+    content:
+      fontSize: 15
+      fontFamily: "Liter, MiSans"
+      color: "$text"
+      text: |
+        <p>本期毛利率42.3%，环比下降2.7个百分点。主要原因是商品成本上升8.3%，建议关注供应商议价和库存周转。</p>
+  - elementId: userMsg2
+    elementType: shape
+    bounds: [400, 420, 340, 60]
+    shapeName: rect
+    fill: {type: solid, color: "#2A2A35"}
+  - elementId: userMsg2Text
+    elementType: text
+    bounds: [415, 430, 310, 40]
+    content:
+      fontSize: 16
+      fontFamily: "Liter, MiSans"
+      color: "$text"
+      text: |
+        <p>如何降低运营成本？</p>
+  - elementId: aiMsg2
+    elementType: shape
+    bounds: [90, 500, 500, 100]
+    shapeName: rect
+    fill: {type: solid, color: "#1A1A24"}
+    border: {style: solid, width: 1, color: "$cardBorder"}
+  - elementId: aiMsg2Text
+    elementType: text
+    bounds: [105, 510, 470, 80]
+    content:
+      fontSize: 15
+      fontFamily: "Liter, MiSans"
+      color: "$text"
+      text: |
+        <p>建议从三方面入手：①优化推广渠道ROI ②降低物流费用率 ③提升人效比。当前费用率15%，仍有优化空间。</p>
+  - elementId: rightFeatures
+    elementType: text
+    bounds: [800, 150, 420, 490]
+    content:
+      style: "$body"
+      fontSize: 18
+      text: |
+        <p><strong style="color: $accent; font-size: 22px;">核心能力</strong></p>
+        <p style="margin-top: 20px;"><span style="color: $accent;">&#9632;</span> 自然语言对话</p>
+        <p style="margin-top: 4px; color: $textMuted;">像聊天一样提问，无需学习成本</p>
+        <p style="margin-top: 20px;"><span style="color: $accent;">&#9632;</span> 基于企业数据</p>
+        <p style="margin-top: 4px; color: $textMuted;">回答基于实际经营数据，非通用建议</p>
+        <p style="margin-top: 20px;"><span style="color: $accent;">&#9632;</span> 个性化解答</p>
+        <p style="margin-top: 4px; color: $textMuted;">结合企业行业、规模、目标定制回答</p>
+        <p style="margin-top: 20px;"><span style="color: $accent;">&#9632;</span> 零额外费用</p>
+        <p style="margin-top: 4px; color: $textMuted;">替代高昂的咨询顾问费用</p>
+  - elementId: bottomLine
+    elementType: shape
+    bounds: [60, 680, 1160, 1]
+    shapeName: rect
+    fill: {type: solid, color: "$cardBorder"}

@@ -5,6 +5,24 @@ import { files, fieldDictionary, metrics, reports, periods } from "@db/schema";
 import { eq, and } from "drizzle-orm";
 import { recognizeFields, calculateMetrics, generateAnalysisReport, generateChatResponse } from "../lib/ai-engine";
 import { callAI, callAIForJSON } from "../lib/ai-caller";
+import { assertCompanyOwner, assertFileOwner, assertPeriodOwner } from "../lib/ownership";
+
+const metricCategories = [
+  "revenue",
+  "cost",
+  "expense",
+  "profit",
+  "cashflow",
+  "efficiency",
+  "growth",
+  "other",
+] as const;
+
+function toMetricCategory(category: string): (typeof metricCategories)[number] {
+  return metricCategories.includes(category as (typeof metricCategories)[number])
+    ? (category as (typeof metricCategories)[number])
+    : "other";
+}
 
 export const parseRouter = createRouter({
   // Process uploaded file: parse → AI field recognition → calculate metrics
@@ -20,6 +38,12 @@ export const parseRouter = createRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
+      const period = await assertPeriodOwner(db, input.periodId, ctx.user.id);
+      const file = await assertFileOwner(db, input.fileId, ctx.user.id);
+      if (period.companyId !== input.companyId || file.companyId !== input.companyId || file.periodId !== input.periodId) {
+        throw new Error("File, period, and company do not match");
+      }
 
       // Step 1: Extract fields with samples for AI recognition
       const fieldsForRecognition = input.headers.map((header) => {
@@ -31,7 +55,7 @@ export const parseRouter = createRouter({
       });
 
       // Step 2: AI field recognition (try real AI first, fallback to rule engine)
-      const systemPrompt = `你是「数观」AI 经营分析系统的字段识别专家。
+      const systemPrompt = `你是「数智经营」AI 经营分析系统的字段识别专家。
 请根据字段名和样本数据，为每个字段给出映射后的标准字段名和字段类型。
 字段类型必须是: revenue(收入) / cost(成本) / expense(费用) / profit(利润) / quantity(数量) / price(价格) / date(日期) / text(文本) / unknown(未知)
 严格按JSON返回: [{"name":"原始名","mappedField":"映射名","fieldType":"revenue","confidence":0.95}]`;
@@ -111,7 +135,7 @@ export const parseRouter = createRouter({
             periodId: input.periodId,
             companyId: input.companyId,
             name: metric.name,
-            category: metric.category as "revenue" | "cost" | "profit" | "cashflow" | "efficiency" | "growth" | "other",
+            category: toMetricCategory(metric.category),
             value: String(metric.value),
             unit: metric.unit ?? undefined,
           });
@@ -139,6 +163,11 @@ export const parseRouter = createRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
+      const period = await assertPeriodOwner(db, input.periodId, ctx.user.id);
+      if (period.companyId !== input.companyId) {
+        throw new Error("Period does not belong to company");
+      }
 
       // Get confirmed fields
       const fields = await db
@@ -158,7 +187,7 @@ export const parseRouter = createRouter({
         .where(eq(metrics.periodId, input.periodId));
 
       // Generate report with AI (try real AI first)
-      const systemPrompt = `你是「数观」AI 经营分析系统的资深经营分析师。请基于经营数据指标生成专业月度经营分析报告。
+      const systemPrompt = `你是「数智经营」AI 经营分析系统的资深经营分析师。请基于经营数据指标生成专业月度经营分析报告。
 严格按JSON返回: {"summary":"总结","insights":[{"title":"标题","content":"内容","level":"success"}],"risks":[{"title":"标题","content":"内容","severity":"medium"}],"suggestions":["建议1"],"dataGaps":["缺口1"]}`;
 
       const userPrompt = `企业: ${input.companyName}, 周期: ${input.period}
@@ -225,6 +254,7 @@ export const parseRouter = createRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const db = getDb();
+      await assertCompanyOwner(db, input.companyId, ctx.user.id);
 
       // Get confirmed fields
       const fields = await db
@@ -254,7 +284,7 @@ export const parseRouter = createRouter({
       }
 
       // Try real AI first
-      const systemPrompt = `你是「数观」AI 经营助手，资深企业经营顾问。帮助中小企业主理解经营数据、发现问题、优化决策。
+      const systemPrompt = `你是「数智经营」AI 经营助手，资深企业经营顾问。帮助中小企业主理解经营数据、发现问题、优化决策。
 风格: 专业但亲和，用数据说话，简洁有力，主动指出数据缺口。
 当前企业: ${input.companyName}, 当前周期: ${input.period}
 已确认字段: ${fields.map(f => `${f.originalField}→${f.mappedField}(${f.fieldType})`).join(", ")}
