@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -e
 
-PROJECT_DIR="/Users/air/AI-Projects/kimi-ai-assistant-mvp"
+PROJECT_DIR="/Users/air/Documents/数智经营"
 APP_PORT="4314"
 APP_URL="http://127.0.0.1:${APP_PORT}/"
 
